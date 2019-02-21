@@ -15,10 +15,8 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
-    path(
-        "users/",
-        include("yongheegram.users.urls", namespace="users"),
-    ),
+    path("users/", include("yongheegram.users.urls", namespace="users"),),
+    path("images/", include("yongheegram.images.urls", namespace="images"),),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
 ] + static(
