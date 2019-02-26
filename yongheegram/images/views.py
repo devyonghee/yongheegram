@@ -26,7 +26,7 @@ class Feed(APIView):
 
 
 class LikeImage(APIView):
-    def post(self, request, image_id ,format=None):
+    def post(self, request, image_id, format=None):
 
         user = request.user
 
@@ -40,9 +40,7 @@ class LikeImage(APIView):
                 creator=user,
                 image=found_image
             )
-            preexisiting_like.delete()
-            
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_304_NOT_MODIFIED)
 
         except models.Like.DoesNotExist:
             new_like = models.Like.objects.create(
@@ -55,7 +53,30 @@ class LikeImage(APIView):
             return Response(status=status.HTTP_201_CREATED)
 
 
-class CommentOnImage(APIView): 
+class UnLikeImage(APIView):
+
+    def delete(self, request, image_id, format=None):
+        user = request.user
+        try:
+            found_image = models.Image.objects.get(id=image_id)
+
+        except models.Image.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            preexisiting_like = models.Like.objects.get(
+                creator=user,
+                image=found_image
+            )
+            preexisiting_like.delete()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        except models.Like.DoesNotExist:
+            return Response(status=status.HTTP_304_NOT_MODIFIED)
+
+
+class CommentOnImage(APIView):
     def post(self, request, image_id, format=None):
 
         user = request.user
@@ -64,16 +85,17 @@ class CommentOnImage(APIView):
             found_image = models.Image.objects.get(id=image_id)
         except models.Image.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         serializer = serializers.CommentSerializer(data=request.data)
 
         if serializer.is_valid():
-            
+
             serializer.save(creator=user, image=found_image)
 
-            return Response(data=serializer.data, status=status.HTTP_201_CREATED )
+            return Response(data=serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class Comment(APIView):
     def delete(self, request, comment_id, format=None):
@@ -87,3 +109,21 @@ class Comment(APIView):
 
         except models.Comment.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class Search(APIView):
+
+    def get(sefl, request, format=None):
+        hashtags = request.query_params.get('hashtags', None)
+
+        if hashtags is not None:
+            hashtags = hashtags.split(',')
+
+            images = models.Image.objects.filter(tags__name__in=hashtags).distinct()
+
+            serializer = serializers.CountImageSerializer(images, many=True)
+
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

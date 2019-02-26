@@ -75,6 +75,7 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',  # REST framework
+    'taggit',   # Tags for the photos
 ]
 LOCAL_APPS = [
     'yongheegram.users.apps.UsersAppConfig',
@@ -257,3 +258,4 @@ SOCIALACCOUNT_ADAPTER = 'yongheegram.users.adapters.SocialAccountAdapter'
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+TAGGIT_CASE_INSENSITIVE = True

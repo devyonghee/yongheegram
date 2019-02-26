@@ -1,5 +1,6 @@
 from django.db import models
 from yongheegram.users import models as user_model
+from taggit.managers import TaggableManager
 
 
 class TiemStampModel(models.Model):
@@ -19,10 +20,15 @@ class Image(TiemStampModel):
     location = models.CharField(max_length=140)
     caption = models.TextField()
     creator = models.ForeignKey(user_model.User, on_delete=models.PROTECT, null=True, related_name='images')
+    tags = TaggableManager()
 
     @property
     def like_count(self):
         return self.likes.all().count()
+
+    @property
+    def comment_count(self):
+        return self.comments.all().count()
 
     def __str__(self):
         return '{} - {}'.format(self.location, self.caption)
