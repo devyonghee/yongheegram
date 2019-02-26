@@ -17,6 +17,7 @@ urlpatterns = [
     # User management
     path("users/", include("yongheegram.users.urls", namespace="users"),),
     path("images/", include("yongheegram.images.urls", namespace="images"),),
+    path("notifications/", include("yongheegram.notifications.urls", namespace="notifications"),),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
 ] + static(

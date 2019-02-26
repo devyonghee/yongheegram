@@ -1,5 +1,5 @@
 from django.db import models
-from yongheegram.users import models as user_model
+from yongheegram.users import models as user_models
 from taggit.managers import TaggableManager
 
 
@@ -19,7 +19,7 @@ class Image(TiemStampModel):
     file = models.ImageField()
     location = models.CharField(max_length=140)
     caption = models.TextField()
-    creator = models.ForeignKey(user_model.User, on_delete=models.PROTECT, null=True, related_name='images')
+    creator = models.ForeignKey(user_models.User, on_delete=models.PROTECT, null=True, related_name='images')
     tags = TaggableManager()
 
     @property
@@ -42,7 +42,7 @@ class Comment(TiemStampModel):
     """ Comment Model """
 
     message = models.TextField()
-    creator = models.ForeignKey(user_model.User, on_delete=models.PROTECT, null=True)
+    creator = models.ForeignKey(user_models.User, on_delete=models.PROTECT, null=True)
     image = models.ForeignKey(Image, on_delete=models.PROTECT, null=True, related_name='comments')
 
     def __str__(self):
@@ -53,7 +53,7 @@ class Like(TiemStampModel):
 
     """ Like Model """
 
-    creator = models.ForeignKey(user_model.User, on_delete=models.PROTECT, null=True)
+    creator = models.ForeignKey(user_models.User, on_delete=models.PROTECT, null=True)
     image = models.ForeignKey(Image, on_delete=models.PROTECT, null=True, related_name='likes')
 
     def __str__(self):
