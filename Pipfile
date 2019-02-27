@@ -35,6 +35,8 @@ pytest-django = "==3.4.7"
 Werkzeug = "==0.14.1"
 Sphinx = "==1.8.4"
 django-taggit = "*"
+djangorestframework-jwt = "*"
+django-taggit-serializer = "*"
 
 [requires]
 python_version = "3.7"

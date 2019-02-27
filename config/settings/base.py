@@ -76,6 +76,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',
     'rest_framework',  # REST framework
     'taggit',   # Tags for the photos
+    'taggit_serializer',  # tag serializer
 ]
 LOCAL_APPS = [
     'yongheegram.users.apps.UsersAppConfig',
@@ -260,3 +261,14 @@ SOCIALACCOUNT_ADAPTER = 'yongheegram.users.adapters.SocialAccountAdapter'
 # Your stuff...
 # ------------------------------------------------------------------------------
 TAGGIT_CASE_INSENSITIVE = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
