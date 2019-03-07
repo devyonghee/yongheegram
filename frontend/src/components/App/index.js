@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import style from "./styles.scss";
+import style from "./styles.module.scss";
 import Footer from "components/Footer";
 
 class App extends Component {

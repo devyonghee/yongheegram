@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./styles.scss";
+import styles from "./styles.module.scss";
 
 const Footer = props => (
   <footer className={styles.footer}>
@@ -20,7 +20,7 @@ const Footer = props => (
       </nav>
     </div>
     <div className={styles.column}>
-      <span className={styles.copyright}>2019 yongheegram</span>
+      <span className={styles.copyright}>ⓒ2019 yongheegram</span>
     </div>
   </footer>
 );
