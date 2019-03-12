@@ -6,7 +6,7 @@ import { ConnectedRouter } from "connected-react-router";
 import store, { history } from "redux/configureStore";
 import "ReactotronConfig";
 import I18n from "redux-i18n";
-import { translations } from "translation";
+import { translations } from "translations";
 
 ReactDOM.render(
   <Provider store={store}>
