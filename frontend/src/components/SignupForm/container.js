@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import SignupForm from "./presenter";
 
 class Container extends Component {
@@ -6,16 +7,20 @@ class Container extends Component {
     username: "",
     password: "",
     email: "",
-    fullName: ""
+    name: ""
+  };
+  static propTypes = {
+    facebookLogin: PropTypes.func.isRequired,
+    createAccount: PropTypes.func.isRequired
   };
   render() {
-    const { username, password, email, fullName } = this.state;
+    const { username, password, email, name } = this.state;
     return (
       <SignupForm
         usernameValue={username}
         passwordValue={password}
         emailValue={email}
-        fullNameValue={fullName}
+        nameValue={name}
         handleInputChange={this._handleInputChange}
         handleSubmit={this._handleSubmit}
         handleFacebookLogin={this._handleFacebookLogin}
@@ -31,11 +36,14 @@ class Container extends Component {
     });
   };
   _handleSubmit = event => {
+    const { email, name, password, username } = this.state;
+    const { createAccount } = this.props;
     event.preventDefault();
-    console.log(this.state);
+    createAccount(username, password, email, name);
   };
   _handleFacebookLogin = response => {
-    console.log(response);
+    const { facebookLogin } = this.props;
+    facebookLogin(response.accessToken);
   };
 }
 export default Container;
