@@ -5,6 +5,7 @@ import styles from "./styles.module.scss";
 const TimeStamp = (props, context) => (
   <span className={styles.time}>{props.time}</span>
 );
+
 TimeStamp.propTypes = {
   time: PropTypes.string.isRequired
 };

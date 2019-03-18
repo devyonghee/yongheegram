@@ -1,45 +1,39 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import LoginForm from "./presenter";
+import CommentBox from "./presenter";
 
 class Container extends Component {
   state = {
-    username: "",
-    password: ""
-  };
-  static propTypes = {
-    facebookLogin: PropTypes.func.isRequired,
-    usernameLogin: PropTypes.func.isRequired
+    commnet: ""
   };
   render() {
-    const { username, password } = this.state;
     return (
-      <LoginForm
+      <CommentBox
         handleInputChange={this._handleInputChange}
-        handleSubmit={this._handleSubmit}
-        handleFacebookLogin={this._handleFacebookLogin}
-        usernameValue={username}
-        passwordValue={password}
+        {...this.state}
+        {...this.props}
+        handleKeyPress={this._handleKeyPress}
       />
     );
   }
   _handleInputChange = event => {
     const {
-      target: { name, value }
+      target: { value }
     } = event;
     this.setState({
-      [name]: value
+      comment: value
     });
   };
-  _handleSubmit = event => {
-    const { usernameLogin } = this.props;
-    const { username, password } = this.state;
-    event.preventDefault();
-    usernameLogin(username, password);
-  };
-  _handleFacebookLogin = response => {
-    const { facebookLogin } = this.props;
-    facebookLogin(response.accessToken);
+  _handleKeyPress = event => {
+    const { submitComment } = this.props;
+    const { comment } = this.state;
+    const { key } = event;
+    if (key === "Enter") {
+      event.preventDefault();
+      submitComment(comment);
+      this.setState({
+        comment: ""
+      });
+    }
   };
 }
 export default Container;
