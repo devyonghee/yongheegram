@@ -100,7 +100,7 @@ class UserFollowers(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         user_followers = found_user.followers.all()
-        serializer = serializers.ListUserSerializer(user_followers, many=True)
+        serializer = serializers.ListUserSerializer(user_followers, many=True, context={"request": request})
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
@@ -113,7 +113,7 @@ class UserFollowing(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         user_following = found_user.following.all()
-        serializer = serializers.ListUserSerializer(user_following, many=True)
+        serializer = serializers.ListUserSerializer(user_following, many=True, context={"request": request})
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
