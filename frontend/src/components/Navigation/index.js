@@ -1,14 +1,11 @@
 import { connect } from "react-redux";
 import Container from "./container";
-import { actionCreators as userAction } from "redux/modules/user";
+import { push } from "react-router-redux";
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    facebookLogin: access_token => {
-      dispatch(userAction.facebookLogin(access_token));
-    },
-    createAccount: (username, password, email, name) => {
-      dispatch(userAction.createAccount(username, password, email, name));
+    goToSearch: searchTerm => {
+      dispatch(push(`/search/${searchTerm}`));
     }
   };
 };
