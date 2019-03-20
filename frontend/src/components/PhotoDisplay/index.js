@@ -5,7 +5,7 @@ import styles from "./styles.module.scss";
 
 const PhotoDisplay = props => (
   <div className={styles.container}>
-    <img src={props.photo.file} className={styles.photo} />
+    <img src={props.photo.file} alt="" className={styles.photo} />
     <div className={styles.overlay}>
       <span className={styles.data}>
         <Ionicon icon="ios-heart" fontSize="22px" color="white" />{" "}
